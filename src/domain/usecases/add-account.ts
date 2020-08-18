@@ -1,7 +1,7 @@
-import { AccountModel } from '../models'
+import { AccountModel } from '../models/account'
 
 export interface AddAccount {
-  add (account: AddAccount.Params): AddAccount.Model
+  add (account: AddAccount.Params): Promise<AddAccount.Model>
 }
 
 export namespace AddAccount {
