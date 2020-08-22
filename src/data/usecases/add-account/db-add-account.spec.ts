@@ -1,14 +1,14 @@
 import { DbAddAccount } from './db-add-account'
-import { Encrypter, AddAccountRepository, AddAccount } from './db-add-account-protocols'
+import { Hasher, AddAccountRepository, AddAccount } from './db-add-account-protocols'
 
 interface SutTypes {
-  encryptStub: Encrypter
+  encryptStub: Hasher
   sut: DbAddAccount
   addAccountRepositoryStub: AddAccountRepository
 }
 
 const makeSut = (): SutTypes => {
-  const encryptStub = makeEncrypter()
+  const encryptStub = makeHasher()
   const addAccountRepositoryStub = makeAddAccountRepository()
   const sut = new DbAddAccount(encryptStub, addAccountRepositoryStub)
   return {
@@ -27,13 +27,13 @@ const makeAddAccountRepository = (): AddAccountRepository => {
   return new AddAccountRepositoryStub()
 }
 
-const makeEncrypter = (): Encrypter => {
-  class EncrypterStub implements Encrypter {
-    async encrypt (value: string): Promise<string> {
+const makeHasher = (): Hasher => {
+  class HasherStub implements Hasher {
+    async hash (value: string): Promise<string> {
       return Promise.resolve('hashed_password')
     }
   }
-  return new EncrypterStub()
+  return new HasherStub()
 }
 
 const makeFakeAccount = (): AddAccount.Model => ({
@@ -50,16 +50,16 @@ const makeFakeAccountData = (): AddAccount.Params => ({
 })
 
 describe('DbAddAccount Usecase', () => {
-  test('Should call Encrypter with correct password', async () => {
+  test('Should call Hasher with correct password', async () => {
     const { sut, encryptStub } = makeSut()
-    const encryptSpy = jest.spyOn(encryptStub, 'encrypt')
+    const encryptSpy = jest.spyOn(encryptStub, 'hash')
     await sut.add(makeFakeAccountData())
     expect(encryptSpy).toHaveBeenCalledWith('valid_password')
   })
 
-  test('Should throw if Encrypter throws', async () => {
+  test('Should throw if Hasher throws', async () => {
     const { sut, encryptStub } = makeSut()
-    jest.spyOn(encryptStub, 'encrypt').mockRejectedValueOnce(new Error())
+    jest.spyOn(encryptStub, 'hash').mockRejectedValueOnce(new Error())
     const promise = sut.add(makeFakeAccountData())
     await expect(promise).rejects.toThrow(new Error())
   })
