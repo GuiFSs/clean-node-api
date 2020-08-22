@@ -1,1 +1,1 @@
-export * from '../../protocols/load-accoun-by-email-repository'
+export * from '../../protocols/db/load-accoun-by-email-repository'
