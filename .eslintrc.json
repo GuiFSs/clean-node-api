@@ -2,7 +2,7 @@
   "extends": "standard-with-typescript",
   "root": true,
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.eslint.json"
   },
   "rules": {
     "@typescript-eslint/comma-spacing": "off",
