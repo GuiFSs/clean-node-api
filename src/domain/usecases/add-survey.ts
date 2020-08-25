@@ -10,6 +10,6 @@ export namespace AddSurvey {
 }
 
 export interface SurveyAnswers {
-  image: string
+  image?: string
   answer: string
 }
