@@ -1,5 +1,5 @@
 import { Controller, HttpResponse, HttpRequest, LoadSurveys } from './load-surveys-controller-protocols'
-import { ok, serverError, noContent } from '../../../helpers'
+import { ok, serverError, noContent } from '@/presentation/helpers'
 
 export class LoadSurveysController implements Controller {
   constructor (
