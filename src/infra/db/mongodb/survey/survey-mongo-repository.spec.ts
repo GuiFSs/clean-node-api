@@ -35,7 +35,8 @@ describe('Account Mongo Repository', () => {
       answers: [
         { image: 'any_image', answer: 'any_asnwer' },
         { answer: 'other_asnwer' }
-      ]
+      ],
+      date: new Date()
     })
     const survey = await surveyCollection.findOne({ question: 'any_question' })
     expect(survey).toBeTruthy()

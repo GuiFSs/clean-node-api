@@ -6,6 +6,7 @@ export namespace AddSurvey {
   export interface Params {
     question: string
     answers: SurveyAnswers[]
+    date: Date
   }
 }
 
