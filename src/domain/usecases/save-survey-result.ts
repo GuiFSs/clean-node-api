@@ -1,7 +1,7 @@
 import { SurveyResultModel } from '../models/survey-result'
 
 export interface SaveSurveyResult {
-  add (data: SaveSurveyResult.Params): Promise<SurveyResultModel>
+  save (data: SaveSurveyResult.Params): Promise<SurveyResultModel>
 }
 
 export namespace SaveSurveyResult {
