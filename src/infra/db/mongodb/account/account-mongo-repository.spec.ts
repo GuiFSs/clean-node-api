@@ -2,7 +2,7 @@ import { MongoHelper } from '../helpers/mongo-helper'
 import { AccountMongoRepository } from './account-mongo-repository'
 import { Collection } from 'mongodb'
 
-interface SutTypes {
+type SutTypes = {
   sut: AccountMongoRepository
 }
 

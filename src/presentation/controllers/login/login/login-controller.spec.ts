@@ -3,7 +3,7 @@ import { badRequest, serverError, unauthorized, ok } from '@/presentation/helper
 import { MissingParamError } from '@/presentation/errors'
 import { Authentication, HttpRequest, Validation } from './login-controller-protocols'
 
-interface SutTypes {
+type SutTypes = {
   sut: LoginController
   authenticationStub: Authentication
   validationStub: Validation
