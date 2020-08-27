@@ -3,8 +3,9 @@ import { SurveyResultModel } from '@/domain/models/survey-result'
 import { SaveSurveyResult } from '@/domain/usecases/survey-result/save-survey-result'
 import { ObjectId } from 'mongodb'
 import { QueryBuilder, MongoHelper } from '../helpers'
+import { LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/load-survey-result-repository'
 
-export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
+export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
   async save (data: SaveSurveyResult.Params): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     const { accountId, surveyId, answer, date } = data
@@ -19,11 +20,11 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
     }, {
       upsert: true // if doesn't find a register than insert a new one
     })
-    const surveyResult = await this.loadBySurveyId(surveyId, accountId)
+    const surveyResult = await this.loadBySurveyId(surveyId)
     return surveyResult
   }
 
-  async loadBySurveyId (surveyId: string, accountId: string): Promise<SurveyResultModel> {
+  async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     const query = new QueryBuilder()
       .match({
@@ -64,7 +65,7 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
         },
         currentAccountAnswer: {
           $push: {
-            $cond: [{ $eq: ['$data.accountId', accountId] }, '$data.answer', null]
+            $cond: [{ $eq: ['$data.accountId', ''] }, '$data.answer', null]
           }
         }
       })
