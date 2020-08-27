@@ -5,5 +5,10 @@ export interface SaveSurveyResult {
 }
 
 export namespace SaveSurveyResult {
-  export type Params = Omit<SurveyResultModel, 'id'>
+  export type Params = {
+    surveyId: string
+    accountId: string
+    answer: string
+    date: Date
+  }
 }
